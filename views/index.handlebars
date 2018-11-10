@@ -1,0 +1,27 @@
+<h1>Burger Eating Simulator 2018</h1>
+<h2>Current Menu:</h2>
+<ul>
+  {{#each burgers}}
+  {{#unless devoured}}
+  <li>
+    <p>{{this.id}}. {{this.burger_name}}
+      <button data-burgerid="{{this.id}}" class="devourBurger">Devour This Burger
+      </button>
+    </p>
+  </li>
+  {{/unless}}
+  {{/each}}
+</ul>
+<div class="col-md-6">
+  <div class="burgers-eaten">
+    <h3>Burgers Eaten:</h3>
+    <ul>
+      {{#each burgers}}
+      {{#if devoured}}
+      <li>{{this.burger_name}}</li>
+      {{/if}}
+      {{/each}}
+    </ul>
+  </div>
+</div>
+
