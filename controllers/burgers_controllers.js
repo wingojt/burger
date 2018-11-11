@@ -9,30 +9,34 @@ var burger = require('../models/burger.js');
 //eport the router at the end of file
 
 router.get("/", (req, res) => {
-
-  burger.selectAll((result) => {
+  burger.selectAll(function(data) {
     let handlebarsObj = {
-      burgers: result
+      burgers: data
     };
     console.log(handlebarsObj);
     res.render("index", handlebarsObj);
   });
 });
 
-router.put("/:id", (req, res) => {
-  let burger_id = req.params.id;
+router.put("/:id", function(req, res) {
+  var condition = "id = " + req.params.id;
+  console.log("condition", condition);
 
-  burger.updateOne(burger_id, (result) => {
+  burger.updateOne({
+    devoured: req.body.devoured
+  }, condition, function() {
     //redirect to root
-    res.redirect("/")
+    res.redirect("/");
   });
 
 });
 
-router.post("/", (req, res) => {
-  let burgerName = req.body.burger_name;
-
-  burger.insertOne(burgerName, (result) => {
+router.post("/", function(req, res) {
+  burger.insertOne([
+    "burger_name", "devoured"
+  ], [
+    req.body.burger_name, req.body.devoured
+  ], function() {
     //redirect to root
     res.redirect("/");
   });
